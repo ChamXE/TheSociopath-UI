@@ -9,22 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        function printInputBox(){
-            document.getElementById('toPrint').innerHTML = "";
-            if(document.getElementById('numOfRelationships').value == ""){
-                alert("Please enter an amount!");
-            }
-            else {
-                var num = document.getElementById('numOfRelationships').value;
-                document.getElementById('submit').disabled = false;
-                var i;
-                for(i=0; i<num; i++){
-                    document.getElementById('toPrint').innerHTML += "<div class=\"input-group mb-3\" style=\"margin-top: 1%\"><div class=\"input-group-prepend\" style=\"margin-top: auto; margin-left: 41.5%; margin-bottom: auto;\"><span class=\"input-group-text\" id=\"basic-addon1\">Relationship " + (i+1) + "</span></div><input type=\"text\" class=\"form-control\" placeholder=\"e.g. 1\" aria-label=\"relationship\" id=\"r" + i + "\" aria-describedby=\"basic-addon1\" style=\"max-width: 14.1%;\"></div>";
-                }
-            }
-        }
-    </script>
+    <script src="../assets/js/main.js"></script>
 </head>
 
 <body
@@ -66,21 +51,23 @@
     </nav>
     <p style="text-align: center; margin-top: 2%;">This is event 6. Where you can give a number of relationships and
         find the total number of unique friendships.</p>
-    
+
     <div style="margin-top:7%;">
         <div class="input-group mb-3">
             <div class="input-group-prepend" style="margin-top: auto; margin-left: 41.5%; margin-bottom: auto;">
-                <span class="input-group-text" id="basic-addon1" data-toggle="tooltip"
-                data-placement="bottom" title="Number of relationships">Amount</span>
+                <span class="input-group-text" id="basic-addon1" data-toggle="tooltip" data-placement="bottom"
+                    title="Number of relationships">Amount</span>
             </div>
-            <input type="text" class="form-control" placeholder="e.g. 1" aria-label="numOfRelationships" id="numOfRelationships"
-                aria-describedby="basic-addon1" style="max-width: 16.6%;">
+            <input type="text" class="form-control" placeholder="e.g. 1" aria-label="numOfRelationships"
+                id="numOfRelationships" aria-describedby="basic-addon1" style="max-width: 16.6%;">
         </div>
-        <button type="button" class="btn btn-secondary btn-sm" style="margin-left:58.5%" onclick="printInputBox()">Generate</button>
+        <button type="button" class="btn btn-secondary btn-sm" style="margin-left:58.5%"
+            onclick="printInputBox()">Generate</button>
         <div id="toPrint">
-            
+
         </div>
-        <input class="btn btn-primary" type="submit" value="Submit" id="submit" style="margin-left:58.2%; margin-top:1%" disabled>
+        <input class="btn btn-primary" type="submit" value="Submit" id="submit" style="margin-left:58.2%; margin-top:1%"
+            disabled>
     </div>
 </body>
 
