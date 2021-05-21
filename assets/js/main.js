@@ -23,3 +23,31 @@ function printInputBox(){
         }
     }
 }
+
+function event1(){
+    if(document.getElementById('proceedEventY').value == "" && document.getElementById('proceedEventN').value == ""){
+        alert("Please choose to either auto-run Event 2 or no!");
+    }
+    else {
+        if(document.getElementById('teacher').value == ""){
+            alert("Please fill in teacher name!");
+            break;
+        }
+        if(document.getElementById('student').value == ""){
+            alert("Please fill in student name!");
+            break;
+        }
+        /*
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:7474/api/event1",
+            data: {
+                'teacher': teacher,
+                'student': student
+            },
+            cache = false
+        }).done(function(html));
+        */
+    }
+    // return false;
+}
