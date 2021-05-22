@@ -9,7 +9,35 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="../assets/js/main.js"></script>
+    <script>
+        function event1() {
+            if (
+                document.getElementById("proceedEventY").value == "" &&
+                document.getElementById("proceedEventN").value == ""
+            ) {
+                alert("Please choose to either auto-run Event 2 or no!");
+            } else {
+                if (document.getElementById("teacher").value == "") {
+                    alert("Please fill in teacher name!");
+                }
+                if (document.getElementById("student").value == "") {
+                    alert("Please fill in student name!");
+                }
+                /*
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:7474/api/event1",
+                        data: {
+                            'teacher': teacher,
+                            'student': student
+                        },
+                        cache = false
+                    }).done(function(html));
+                    */
+            }
+            return false;
+        }
+    </script>
 </head>
 
 <body
