@@ -61,18 +61,21 @@
                         document.getElementById("student").value = "";
                         document.getElementById("proceedEventY").checked = false;
                         document.getElementById("proceedEventN").checked = false;
-                        var message = result.payload.message;
+                        var message = result.payload.goodTeaching;
+                        
                         if(message.localeCompare("NS") == 0){
-                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed (Not stranger)</p>";
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed (Not stranger!)</p>";
+                        }
+                        else if(message.localeCompare("good") == 0){
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success ("+ teacher + " taught " + student + " very well!)</p>";
+                        }
+                        else if(message.localeCompare("bad") == 0){
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success ("+ teacher + " taught " + student + " badly!)</p>";
                         }
                         else {
-                            if(result.payload.goodTeaching){
-                                document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success ("+ teacher + " taught " + student + " very well!)</p>";
-                            }
-                            else {
-                                document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success ("+ teacher + " taught " + student + " badly!)</p>";
-                            }
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed (Something went wrong!)</p>";
                         }
+                        
                         console.log(result);
                     })
                     .fail(function (error) {
