@@ -60,21 +60,34 @@
                         document.getElementById("student").value = "";
                         document.getElementById("proceedEventY").checked = false;
                         document.getElementById("proceedEventN").checked = false;
-                        var message = result.payload.goodTeaching;
-                        
-                        if(message.localeCompare("NS") == 0){
+                        var message = result.payload.message;
+
+                        if (message.localeCompare("NS") == 0) {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed (Not stranger!)</p>";
                         }
-                        else if(message.localeCompare("good") == 0){
-                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success ("+ teacher + " taught " + student + " very well!)</p>";
+                        else if (message.localeCompare("good") == 0) {
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success (" + teacher + " taught " + student + " very well!)</p>";
                         }
-                        else if(message.localeCompare("bad") == 0){
-                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success ("+ teacher + " taught " + student + " badly!)</p>";
+                        else if (message.localeCompare("bad") == 0) {
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success (" + teacher + " taught " + student + " badly!)</p>";
                         }
                         else {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed (Something went wrong!)</p>";
                         }
-                        
+                        if (proceedEvent2) {
+                            var event2Msg = result.payload.event2;
+                            document.getElementById("status").innerHTML += "<br>";
+                            if (event2Msg.localeCompare("NT") == 0) {
+                                document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Status: Event 2 Failed (Never taught!)</p>";
+                            }
+                            else if (event2Msg.localeCompare("good") == 0) {
+                                document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Status: Event 2 Success</p>";
+                            }
+                            else {
+                                document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Status: Event 2 Failed (Something went wrong!)</p>";
+                            }
+                        }
+
                         console.log(result);
                     })
                     .fail(function (error) {
@@ -164,7 +177,7 @@
         <input class="btn btn-primary" type="submit" value="Submit" style="margin-left:56.6%" onclick="event1()">
     </div>
     <div id="status" style="margin: 2% auto; max-width: 25%;">
-        
+
     </div>
 </body>
 
