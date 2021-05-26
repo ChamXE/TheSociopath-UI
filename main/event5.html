@@ -11,12 +11,90 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function checkRadioButton() {
+            document.getElementById("rumour").value = "";
+            document.getElementById("crush").value = "";
             if (document.getElementById("randomizeY").checked) {
-                document.getElementById("you").disabled = true;
+                document.getElementById("rumour").disabled = true;
                 document.getElementById("crush").disabled = true;
             } else {
-                document.getElementById("you").disabled = false;
+                document.getElementById("rumour").disabled = false;
                 document.getElementById("crush").disabled = false;
+            }
+        }
+
+        function event5() {
+            var rumour = document.getElementById("rumour").value;
+            var crush = document.getElementById("crush").value;
+            var randomizeY = document.getElementById("randomizeY").checked;
+            var randomizeN = document.getElementById("randomizeN").checked;
+            var proceed = true;
+            if (!randomizeY && !randomizeN) {
+                alert("Please choose to randomize or not!");
+                proceed = false;
+            }
+            else {
+                if (!randomizeY) {
+                    if (rumour == "") {
+                        alert("Please enter who are you!");
+                        proceed = false;
+                    }
+                    if (crush == "") {
+                        alert("Please enter your crush!");
+                        proceed = false;
+                    }
+                }
+            }
+            if (proceed) {
+                var randomize;
+                if (randomizeY) {
+                    randomize = true;
+                }
+                else {
+                    randomize = false;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    accept: {
+                        json: "application/json"
+                    },
+                    url: "http://localhost:8080/api/event5/",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        'rumour': rumour,
+                        'crush': crush,
+                        'randomize': randomize
+                    }),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Basic " + btoa("neo4j" + ":" + "123"));
+                    },
+                    cache: false
+                })
+                    .done(function (result) {
+                        document.getElementById("rumour").value = "";
+                        document.getElementById("crush").value = "";
+                        document.getElementById("randomizeY").checked = false;
+                        document.getElementById("randomizeN").checked = false;
+                        var message = result.payload.status;
+
+                        if (message.localeCompare("good") == 0) {
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\">You successfully stopped the rumour!</p>";
+                        }
+                        else if (message.localeCompare("bad") == 0) {
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\">You failed to stopped the rumour!</p>";
+                        }
+                        else {
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                        }
+
+                        console.log(result);
+                    })
+                    .fail(function (error) {
+                        document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                    });
             }
         }
     </script>
@@ -84,20 +162,23 @@
     <div style="margin-top:1.5%;">
         <div class="input-group mb-3">
             <div class="input-group-prepend" style="margin-top: auto; margin-left: 41.5%; margin-bottom: auto;">
-                <span class="input-group-text" id="basic-addon1">You</span>
+                <span class="input-group-text" id="basic-addon1">Rumour</span>
             </div>
-            <input type="text" class="form-control" placeholder="e.g. 1" aria-label="Teacher" id="you"
-                aria-describedby="basic-addon1" style="max-width: 16.6%;">
+            <input type="text" class="form-control" placeholder="e.g. 1" aria-label="Rumour source" id="rumour"
+                aria-describedby="basic-addon1" style="max-width: 15.0%;">
         </div>
         <div class="input-group mb-3" style="margin-top:1.5%">
             <div class="input-group-prepend" style="margin-top: auto; margin-left: 41.5%; margin-bottom: auto;">
                 <span class="input-group-text" id="basic-addon1">Crush</span>
             </div>
-            <input type="text" class="form-control" placeholder="e.g. 4" aria-label="Student" id="crush"
+            <input type="text" class="form-control" placeholder="e.g. 4" aria-label="Crush" id="crush"
                 aria-describedby="basic-addon1" style="max-width: 15.8%;">
         </div>
 
         <input class="btn btn-primary" type="submit" value="Submit" style="margin-left:56.6%" onclick="event5()">
+    </div>
+    <div id="status" style="margin: 2% auto; max-width: 25%;">
+
     </div>
 </body>
 
