@@ -11,30 +11,65 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function event1() {
-            if (
-                document.getElementById("proceedEventY").value == "" &&
-                document.getElementById("proceedEventN").value == ""
-            ) {
-                alert("Please choose to either auto-run Event 2 or no!");
-            } else {
-                if (document.getElementById("teacher").value == "") {
-                    alert("Please fill in teacher name!");
-                }
-                if (document.getElementById("student").value == "") {
-                    alert("Please fill in student name!");
-                }
-                /*
-                    $.ajax({
-                        type: "POST",
-                        url: "http://localhost:7474/api/event1",
-                        data: {
-                            'teacher': teacher,
-                            'student': student
-                        },
-                        cache = false
-                    }).done(function(html));
-                    */
+            var buttonYes = document.getElementById("proceedEventY").checked;
+            var buttonNo = document.getElementById("proceedEventN").checked;
+            var proceed = true;
+
+            if (!buttonYes && !buttonNo) {
+                alert("Please choose either to auto-run Event 2 or no!");
+                proceed = false;
             }
+            if (document.getElementById("teacher").value == "") {
+                alert("Please fill in teacher name!");
+                proceed = false;
+            }
+            if (document.getElementById("student").value == "") {
+                alert("Please fill in student name!");
+                proceed = false;
+            }
+            if (proceed) {
+                var teacher = document.getElementById("teacher").value;
+                var student = document.getElementById("student").value;
+                var proceedEvent2;
+                if (buttonYes) {
+                    proceedEvent2 = true;
+                }
+                else {
+                    proceedEvent2 = false;
+                }
+                $.ajax({
+                    type: "POST",
+                    accept: {
+                        json: "application/json"
+                    },
+                    url: "http://localhost:8080/api/event1/",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        'teacher': teacher,
+                        'student': student,
+                        'proceedEvent2': proceedEvent2
+                    }),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Basic " + btoa("neo4j" + ":" + "123"));
+                    },
+                    cache: false
+                })
+                    .done(function (result) {
+                        document.getElementById("status").innerHTML = "<p style=\"text-align:center\"> Status: Success</p>"
+                        document.getElementById("teacher").value = "";
+                        document.getElementById("student").value = "";
+                        document.getElementById("proceedEventY").checked = false;
+                        document.getElementById("proceedEventN").checked = false;
+                        console.log(result);
+                    })
+                    .fail(function (error) {
+                        document.getElementById("status").innerHTML = "<p style=\"text-align:center\"> Status: Failed</p>"
+                        console.log(error.statusText);
+                        alert("error");
+                    });
+            }
+
             return false;
         }
     </script>
@@ -79,6 +114,7 @@
     </nav>
     <p style="text-align: center; margin-top: 2%;">This is event 1. Where a stranger can ask someone to teach him
         programming skills.</p>
+
     <div style="margin-top:7%;">
         <div class="input-group mb-3">
             <div class="input-group-prepend" style="margin-top: auto; margin-left: 41.5%; margin-bottom: auto;">
@@ -112,6 +148,9 @@
             </div>
         </div>
         <input class="btn btn-primary" type="submit" value="Submit" style="margin-left:56.6%" onclick="event1()">
+    </div>
+    <div id="status">
+        
     </div>
 </body>
 
