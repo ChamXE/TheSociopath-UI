@@ -11,7 +11,60 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function event2() {
+            var student = document.getElementById("student").value;
+            var teacher = document.getElementById("teacher").value;
+            var proceed = true;
 
+            if(teacher == ""){
+                alert("Please fill in teacher name!");
+                proceed = false;
+            }
+            if(student == ""){
+                alert("Please fill in student name!");
+                proceed = false;
+            }
+
+            if(proceed){
+                $.ajax({
+                    type: "POST",
+                    accept: {
+                        json: "application/json"
+                    },
+                    url: "http://localhost:8080/api/event2/",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        'teacher': teacher,
+                        'student': student
+                    }),
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader("Authorization", "Basic" + btoa("neo4j" + ":" + "123"));
+                    },
+                    cache: false
+                })
+                    .done(function (result) {
+                        document.getElementById("teacher").value = "";
+                        document.getElementById("student").value = "";
+                        var message = result.payload.status;
+
+                        if(message.localeCompare("NT") == 0){
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed (Never taught!)</p>";
+                        }
+                        else if(message.localeCompare("good") == 0){
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
+                        }
+                        else {
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed (Something went wrong!)</p>";
+                        }
+
+                        console.log(result);
+                    })
+                    .fail(function (error){
+                        document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                    });
+            }
+
+            return false;
         }
     </script>
 </head>
@@ -71,6 +124,9 @@
                 aria-describedby="basic-addon1" style="max-width: 15%;">
         </div>
         <input class="btn btn-primary" type="submit" value="Submit" style="margin-left:56.6%" onclick="event2()">
+    </div>
+    <div id="status" style="margin: 2% auto; max-width: 25%;">
+        
     </div>
 </body>
 
