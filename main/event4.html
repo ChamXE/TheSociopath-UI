@@ -11,6 +11,52 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function event4() {
+            var numOfBooks = document.getElementById("numOfBooks").value;
+            var books = document.getElementById("books").value;
+            var proceed = true;
+
+            if(numOfBooks == ""){
+                alert("Please fill in number of books!");
+                proceed = false;
+            }
+            if(books == ""){
+                alert("Please fill in height of books!");
+                proceed = false;
+            }
+
+            if(proceed){
+                $.ajax({
+                    type: "POST",
+                    accept: {
+                        json: "application/json"
+                    },
+                    url: "http://localhost:8080/api/event4/",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        'numOfBooks': numOfBooks,
+                        'books': books
+                    }),
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader("Authorization", "Basic" + btoa("neo4j" + ":" + "123"));
+                    },
+                    cache: false
+                })
+                    .done(function (result) {
+                        document.getElementById("numOfBooks").value = "";
+                        document.getElementById("books").value = "";
+                        var message = result.payload.status;
+
+                        document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
+                        document.getElementById("status").innerHTML += "<br><p style=\"text-align:center; background-color: white\"> Rounds needed: " + message + " </p>";
+
+                        console.log(result);
+                    })
+                    .fail(function (error) {
+                        document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                    });
+            }
+
             return false;
         }
     </script>
@@ -73,6 +119,9 @@
                 aria-describedby="basic-addon1" style="max-width: 15.8%;">
         </div>
         <input class="btn btn-primary" type="submit" value="Submit" style="margin-left:56.8%" onclick="event4()">
+    </div>
+    <div id="status" style="margin: 2% auto; max-width: 25%;">
+        
     </div>
 </body>
 
