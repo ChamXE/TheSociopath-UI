@@ -56,15 +56,27 @@
                     cache: false
                 })
                     .done(function (result) {
-                        document.getElementById("status").innerHTML = "<p style=\"text-align:center\"> Status: Success</p>"
+                        
                         document.getElementById("teacher").value = "";
                         document.getElementById("student").value = "";
                         document.getElementById("proceedEventY").checked = false;
                         document.getElementById("proceedEventN").checked = false;
+                        var message = result.payload.message;
+                        if(message.localeCompare("NS") == 0){
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed (Not stranger)</p>";
+                        }
+                        else {
+                            if(result.payload.goodTeaching){
+                                document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success ("+ teacher + " taught " + student + " very well!)</p>";
+                            }
+                            else {
+                                document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success ("+ teacher + " taught " + student + " badly!)</p>";
+                            }
+                        }
                         console.log(result);
                     })
                     .fail(function (error) {
-                        document.getElementById("status").innerHTML = "<p style=\"text-align:center\"> Status: Failed</p>"
+                        document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
                         console.log(error.statusText);
                         alert("error");
                     });
@@ -149,7 +161,7 @@
         </div>
         <input class="btn btn-primary" type="submit" value="Submit" style="margin-left:56.6%" onclick="event1()">
     </div>
-    <div id="status">
+    <div id="status" style="margin: 2% auto; max-width: 25%;">
         
     </div>
 </body>
