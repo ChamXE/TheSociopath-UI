@@ -14,12 +14,12 @@
             var person = document.getElementById("person").value;
             var proceed = true;
 
-            if(person == ""){
+            if (person == "") {
                 alert("Please fill in the person!");
                 proceed = false;
             }
 
-            if(proceed){
+            if (proceed) {
                 $.ajax({
                     type: "POST",
                     accept: {
@@ -33,17 +33,25 @@
                     }),
                     cache: false
                 })
-                    .done(function (result){
+                    .done(function (result) {
                         document.getElementById("person").value = "";
                         var message = result.payload.status;
-                        if(message.localeCompare("good") == 0){
+                        if (message.localeCompare("NFE") == 0) {
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Enter only numbers in the text field! </p>";
+                        }
+                        else if(message.localeCompare("NV") == 0){
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Person does not exist! </p>";
+                        }
+                        else {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
                         }
                         console.log(result);
                     })
-                    .fail(function (error){
+                    .fail(function (error) {
                         document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
-                    })
+                    });
             }
             return false;
         }
@@ -100,7 +108,7 @@
         <input class="btn btn-primary" type="submit" value="Submit" style="margin-left:56.6%" onclick="event3()">
     </div>
     <div id="status" style="margin: 2% auto; max-width: 25%;">
-        
+
     </div>
 </body>
 

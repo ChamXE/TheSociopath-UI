@@ -65,27 +65,39 @@
                         if (message.localeCompare("NS") == 0) {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed (Not stranger!)</p>";
                         }
-                        else if (message.localeCompare("good") == 0) {
-                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success (" + teacher + " taught " + student + " very well!)</p>";
+                        else if (message.localeCompare("NFE") == 0) {
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Enter only numbers in the text field! </p>";
                         }
-                        else if (message.localeCompare("bad") == 0) {
-                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success (" + teacher + " taught " + student + " badly!)</p>";
+                        else if(message.localeCompare("good") == 0 || message.localeCompare("bad") == 0){
+                            if (message.localeCompare("good") == 0) {
+                                document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success (" + teacher + " taught " + student + " very well!)</p>";
+                            }
+                            else if (message.localeCompare("bad") == 0) {
+                                document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success (" + teacher + " taught " + student + " badly!)</p>";
+                            }
+                            if (proceedEvent2) {
+                                var event2Msg = result.payload.event2;
+                                if (event2Msg.localeCompare("NT") == 0) {
+                                    document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Status: Event 2 Failed (Never taught!)</p>";
+                                }
+                                else if (event2Msg.localeCompare("good") == 0) {
+                                    document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Status: Event 2 Success</p>";
+                                }
+                                else if (message.localeCompare("AT") == 0) {
+                                    document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed (Already done before!)</p>";
+                                }
+                                else {
+                                    document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Status: Event 2 Failed (Something went wrong!)</p>";
+                                }
+                            }
+                        }
+                        else if(message.localeCompare("NV") == 0){
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Teacher or student does not exist! </p>";
                         }
                         else {
-                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed (Something went wrong!)</p>";
-                        }
-                        if (proceedEvent2) {
-                            var event2Msg = result.payload.event2;
-                            document.getElementById("status").innerHTML += "<br>";
-                            if (event2Msg.localeCompare("NT") == 0) {
-                                document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Status: Event 2 Failed (Never taught!)</p>";
-                            }
-                            else if (event2Msg.localeCompare("good") == 0) {
-                                document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Status: Event 2 Success</p>";
-                            }
-                            else {
-                                document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Status: Event 2 Failed (Something went wrong!)</p>";
-                            }
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Status: Failed (Something went wrong!)</p>";
                         }
 
                         console.log(result);

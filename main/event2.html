@@ -15,16 +15,16 @@
             var teacher = document.getElementById("teacher").value;
             var proceed = true;
 
-            if(teacher == ""){
+            if (teacher == "") {
                 alert("Please fill in teacher name!");
                 proceed = false;
             }
-            if(student == ""){
+            if (student == "") {
                 alert("Please fill in student name!");
                 proceed = false;
             }
 
-            if(proceed){
+            if (proceed) {
                 $.ajax({
                     type: "POST",
                     accept: {
@@ -37,7 +37,7 @@
                         'teacher': teacher,
                         'student': student
                     }),
-                    beforeSend: function(xhr) {
+                    beforeSend: function (xhr) {
                         xhr.setRequestHeader("Authorization", "Basic" + btoa("neo4j" + ":" + "123"));
                     },
                     cache: false
@@ -47,11 +47,22 @@
                         document.getElementById("student").value = "";
                         var message = result.payload.status;
 
-                        if(message.localeCompare("NT") == 0){
+                        if (message.localeCompare("NT") == 0) {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed (Never taught!)</p>";
                         }
-                        else if(message.localeCompare("good") == 0){
+                        else if (message.localeCompare("good") == 0) {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
+                        }
+                        else if (message.localeCompare("AT") == 0) {
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed (Already done before!)</p>";
+                        }
+                        else if (message.localeCompare("NFE") == 0) {
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Enter only numbers in the text field! </p>";
+                        }
+                        else if(message.localeCompare("NV") == 0){
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Teacher or student does not exist! </p>";
                         }
                         else {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed (Something went wrong!)</p>";
@@ -59,7 +70,7 @@
 
                         console.log(result);
                     })
-                    .fail(function (error){
+                    .fail(function (error) {
                         document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
                     });
             }
@@ -126,7 +137,7 @@
         <input class="btn btn-primary" type="submit" value="Submit" style="margin-left:56.6%" onclick="event2()">
     </div>
     <div id="status" style="margin: 2% auto; max-width: 25%;">
-        
+
     </div>
 </body>
 

@@ -80,11 +80,19 @@
 
                         if (message.localeCompare("good") == 0) {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
-                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\">You successfully stopped the rumour!</p>";
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\">You successfully stopped the rumour!</p>";
                         }
                         else if (message.localeCompare("bad") == 0) {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
-                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\">You failed to stopped the rumour!</p>";
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\">You failed to stopped the rumour!</p>";
+                        }
+                        else if (message.localeCompare("NFE") == 0) {
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Enter only numbers in the text field! </p>";
+                        }
+                        else if(message.localeCompare("NV") == 0){
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Rumour or crush does not exist! </p>";
                         }
                         else {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
