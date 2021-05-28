@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>The Sociopath - Print</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
+    <script type="text/javascript">
+        var viz;
+
+        function draw() {
+            var config = {
+                container_id: "viz",
+                server_url: "bolt://localhost:7687",
+                server_user: "neo4j",
+                server_password: "123",
+                labels: {
+                    "Person": {
+                        "caption": "name",
+                        "size": "pagerank",
+                        "community": "community",
+                        "title_properties": [
+                            "name",
+                            "pagerank"
+                        ]
+                    }
+                },
+                relationships: {
+                    "FRIEND_WITH": {
+                        "thickness": "weight",
+                        "caption": true
+                    }
+                },
+                arrows: true,
+                initial_cypher: "MATCH (n)-[r:FRIEND_WITH]->(m) RETURN *"
+            };
+
+            viz = new NeoVis.default(config);
+            viz.render();
+        }
+    </script>
+</head>
+
+<body onload="draw()">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <img src="../assets/images/sociopath_logo_transparent.png" alt="Sociopath Logo"
+            style="height: 60px; width: auto; padding-right:10px" class="rounded float-left">
+        <a class="navbar-brand" href="../index.html">Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Functions
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="event1.html">Event 1</a>
+                        <a class="dropdown-item" href="event2.html">Event 2</a>
+                        <a class="dropdown-item" href="event3.html">Event 3</a>
+                        <a class="dropdown-item" href="event4.html">Event 4</a>
+                        <a class="dropdown-item" href="event5.html">Event 5</a>
+                        <a class="dropdown-item" href="event6.html">Event 6</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="print.html">Print</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <img src="../assets/images/CALM_logo_transparent.png" alt="CALM Logo"
+            style="height: 60px; width: auto;" class="rounded float-right">
+    </nav>
+    <p style="text-align: center; margin-top: 2%; margin-bottom: 2%">This is a function to visualize the whole graph.</p>
+
+    <div id="viz" style="height: 650px; width: 90%">
+
+    </div>
+    <button type="button" class="btn btn-default btn-sm" style="margin-left: 94%; margin-top: 2.5%">
+        <span class="glyphicon glyphicon-refresh"></span> Refresh
+    </button>
+</body>
+
+</html>
