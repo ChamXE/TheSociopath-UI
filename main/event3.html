@@ -11,6 +11,40 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function event3() {
+            var person = document.getElementById("person").value;
+            var proceed = true;
+
+            if(person == ""){
+                alert("Please fill in the person!");
+                proceed = false;
+            }
+
+            if(proceed){
+                $.ajax({
+                    type: "POST",
+                    accept: {
+                        json: "application/json"
+                    },
+                    url: "http://localhost:8080/api/event3/",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        'person': person
+                    }),
+                    cache: false
+                })
+                    .done(function (result){
+                        document.getElementById("person").value = "";
+                        var message = result.payload.status;
+                        if(message.localeCompare("good") == 0){
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
+                        }
+                        console.log(result);
+                    })
+                    .fail(function (error){
+                        document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                    })
+            }
             return false;
         }
     </script>
@@ -53,17 +87,20 @@
         <img src="../assets/images/CALM_logo_transparent.png" alt="CALM Logo"
             style="text-align: left; height: 60px; width: auto; padding-right: 20px;">
     </nav>
-    <p style="text-align: center; margin-top: 2%;">This is event 3. Where the student can use to find the method of
+    <p style="text-align: center; margin-top: 2%;">This is event 3. Where someone can use to find the method of
         getting highest reputation during lunch time.</p>
     <div style="margin-top:7%;">
         <div class="input-group mb-3">
             <div class="input-group-prepend" style="margin-top: auto; margin-left: 41.5%; margin-bottom: auto;">
-                <span class="input-group-text" id="basic-addon1">Student</span>
+                <span class="input-group-text" id="basic-addon1">Person</span>
             </div>
-            <input type="text" class="form-control" placeholder="e.g. 4" aria-label="Student" id="student"
+            <input type="text" class="form-control" placeholder="e.g. 4" aria-label="Person" id="person"
                 aria-describedby="basic-addon1" style="max-width: 15%;">
         </div>
         <input class="btn btn-primary" type="submit" value="Submit" style="margin-left:56.6%" onclick="event3()">
+    </div>
+    <div id="status" style="margin: 2% auto; max-width: 25%;">
+        
     </div>
 </body>
 
