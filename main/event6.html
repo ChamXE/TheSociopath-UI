@@ -35,13 +35,26 @@
             var relationships = [];
             var i;
             var proceed = true;
+            var printPathY = document.getElementById("printPathY").checked;
+            var printPathN = document.getElementById("printPathN").checked;
             for (i = 0; i < num; i++) {
                 if (document.getElementById("r" + i).value == "") {
                     alert("Please enter value for Relationship " + (i + 1));
                     proceed = false;
                 }
             }
+            if(!printPathY && !printPathN){
+                alert("Please choose either to print path or not!");
+                proceed = false;
+            }
             if (proceed) {
+                var printPath;
+                if(printPathY){
+                    printPath = true;
+                }
+                else {
+                    printPath = false;
+                }
                 i = 0;
                 for (i = 0; i < num; i++) {
                     relationships.push(document.getElementById("r" + i).value);
@@ -57,7 +70,8 @@
                     dataType: "json",
                     data: JSON.stringify({
                         'numOfRelationships': num,
-                        'relationships': relationships
+                        'relationships': relationships,
+                        'printPath': printPath
                     }),
                     cache: false
                 })
@@ -71,13 +85,21 @@
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
                             document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Enter only numbers in the text field! </p>";
                         }
-                        else if(message.localeCompare("EL") == 0) {
+                        else if (message.localeCompare("EL") == 0) {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
                             document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Number of relationships do not match! </p>";
                         }
                         else {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
                             document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Number of relationships: " + message + " </p>";
+                            if(printPath){
+                                var paths = result.payload.path;
+                                var possiblePaths = paths.split("%");
+                                i = 0;
+                                for(i = 0; i < possiblePaths.length-1; i++){
+                                    document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> " + (i+1) + ". " + possiblePaths[i] + " </p>";
+                                }
+                            }
                         }
                         console.log(result);
                     })
@@ -125,13 +147,30 @@
                 </li>
             </ul>
         </div>
-        <img src="../assets/images/CALM_logo_transparent.png" alt="CALM Logo"
-            style="height: 60px; width: auto;" class="rounded float-right">
+        <img src="../assets/images/CALM_logo_transparent.png" alt="CALM Logo" style="height: 60px; width: auto;"
+            class="rounded float-right">
     </nav>
     <p style="text-align: center; margin-top: 2%;">This is event 6. Where you can give a number of relationships and
         find the total number of unique friendships.</p>
-
-    <div style="margin-top:7%;">
+    <div style="margin-left: 41.5%; margin-top:5%">
+        <div class="input-group-prepend" style="margin-top: auto; margin-bottom: auto;">
+            <span class="input-group-text" id="basic-addon1" style="margin-right: 3.2%" data-toggle="tooltip"
+                data-placement="bottom" title="Choose to print path or no">Print Path</span>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="Print Path" id="printPathY" value="Yes">
+                <label class="form-check-label" for="exampleRadios1">
+                    Yes
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="Print Path" id="printPathN" value="No">
+                <label class="form-check-label" for="exampleRadios2">
+                    No
+                </label>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top:1.5%;">
         <div class="input-group mb-3">
             <div class="input-group-prepend" style="margin-top: auto; margin-left: 41.5%; margin-bottom: auto;">
                 <span class="input-group-text" id="basic-addon1" data-toggle="tooltip" data-placement="bottom"
@@ -145,7 +184,7 @@
         <div id="toPrint">
 
         </div>
-        <input class="btn btn-primary" type="submit" value="Submit" id="submit" style="margin-left:58.2%; margin-top:1%"
+        <input class="btn btn-primary" type="submit" value="Submit" id="submit" style="margin-left:58.5%; margin-top:1%"
             disabled onclick="event6()">
     </div>
     <div id="status" style="margin: 2% auto; max-width: 25%;">
