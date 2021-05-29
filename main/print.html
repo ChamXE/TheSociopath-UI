@@ -14,6 +14,29 @@
     <script type="text/javascript">
         var viz;
 
+        function reset(){
+            $.ajax({
+                type: "POST",
+                accept: {
+                    json: "application/json"
+                },
+                url: "http://localhost:8080/api/clearDb/",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                        'data': ""
+                }),
+                cache: false
+            })
+                .done(function (result) {
+                    viz.reload();
+                    console.log(result);
+                })
+                .fail(function (error){
+                    console.log(error);
+                })
+        }
+
         function reload() {
             viz.reload();
         }
@@ -96,10 +119,12 @@
     <div id="viz" style="height: 650px; width: 90%; margin: auto" class="border border-secondary">
 
     </div>
-    <button type="button" class="btn btn-light" style="margin-left: 92.4%; margin-top: 1.5%" onclick="reload()">
-        <span class="material-icons">refresh</span>
-        
-    </button>
+    <div style="height: 50px; width: 90%; margin: auto; margin-top: 1.5%;">
+        <button type="button" class="btn btn-light" style="" onclick="reset()">Reset</button>
+        <button type="button" class="btn btn-light float-right" onclick="reload()">
+            <span class="material-icons">refresh</span>
+        </button>
+    </div>
 </body>
 
 </html>
