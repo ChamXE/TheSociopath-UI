@@ -50,9 +50,6 @@
                         'student': student,
                         'proceedEvent2': proceedEvent2
                     }),
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader("Authorization", "Basic " + btoa("neo4j" + ":" + "123"));
-                    },
                     cache: false
                 })
                     .done(function (result) {

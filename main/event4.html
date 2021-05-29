@@ -37,9 +37,6 @@
                         'numOfBooks': numOfBooks,
                         'books': books
                     }),
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader("Authorization", "Basic" + btoa("neo4j" + ":" + "123"));
-                    },
                     cache: false
                 })
                     .done(function (result) {

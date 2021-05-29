@@ -66,9 +66,6 @@
                         'crush': crush,
                         'randomize': randomize
                     }),
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader("Authorization", "Basic " + btoa("neo4j" + ":" + "123"));
-                    },
                     cache: false
                 })
                     .done(function (result) {
@@ -89,6 +86,14 @@
                         else if (message.localeCompare("NFE") == 0) {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
                             document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Enter only numbers in the text field! </p>";
+                        }
+                        else if (message.localeCompare("NN") == 0) {
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Crush and rumour cannot be neighbour! </p>";
+                        }
+                        else if (message.localeCompare("NE") == 0) {
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Crush cannot be equal to rumour! </p>";
                         }
                         else if(message.localeCompare("NV") == 0){
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
