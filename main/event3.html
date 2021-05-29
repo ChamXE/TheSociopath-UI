@@ -46,6 +46,8 @@
                         }
                         else {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
+                            var answer = result.payload.answer;
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Reputation earned: " + answer + "</p>";
                         }
                         console.log(result);
                     })
