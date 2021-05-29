@@ -22,7 +22,7 @@
                 var i;
                 for (i = 0; i < num; i++) {
                     document.getElementById("toPrint").innerHTML +=
-                        '<div class="input-group mb-3" style="margin-top: 1%"><div class="input-group-prepend" style="margin-top: auto; margin-left: 41.5%; margin-bottom: auto;"><span class="input-group-text" id="basic-addon1">Relationship ' +
+                        '<div class="input-group mb-3" style="margin-top: 1%"><div class="input-group-prepend" style="margin-top: auto; margin-left: 41.5%; margin-bottom: auto;"><span class="input-group-text" data-toggle="tooltip" data-placement="bottom" title="Separate with spaces" id="basic-addon1">Relationship ' +
                         (i + 1) +
                         '</span></div><input type="text" class="form-control" placeholder="e.g. 1" aria-label="relationship" id="r' +
                         i +
@@ -43,13 +43,13 @@
                     proceed = false;
                 }
             }
-            if(!printPathY && !printPathN){
+            if (!printPathY && !printPathN) {
                 alert("Please choose either to print path or not!");
                 proceed = false;
             }
             if (proceed) {
                 var printPath;
-                if(printPathY){
+                if (printPathY) {
                     printPath = true;
                 }
                 else {
@@ -92,12 +92,12 @@
                         else {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
                             document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Number of relationships: " + message + " </p>";
-                            if(printPath){
+                            if (printPath) {
                                 var paths = result.payload.path;
                                 var possiblePaths = paths.split("%");
                                 i = 0;
-                                for(i = 0; i < possiblePaths.length-1; i++){
-                                    document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> " + (i+1) + ". " + possiblePaths[i] + " </p>";
+                                for (i = 0; i < possiblePaths.length - 1; i++) {
+                                    document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> " + (i + 1) + ". " + possiblePaths[i] + " </p>";
                                 }
                             }
                         }
