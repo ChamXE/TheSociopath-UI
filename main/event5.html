@@ -77,7 +77,12 @@
 
                         if (message.localeCompare("good") == 0) {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
+                            if(randomize){
+                                document.getElementById("rumour").value = result.payload.rumour;
+                                document.getElementById("crush").value = result.payload.crush;
+                            }
                             document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\">You successfully stopped the rumour!</p>";
+                            
                         }
                         else if (message.localeCompare("bad") == 0) {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
