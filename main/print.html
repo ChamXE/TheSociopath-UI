@@ -17,15 +17,7 @@
         function reset(){
             $.ajax({
                 type: "POST",
-                accept: {
-                    json: "application/json"
-                },
                 url: "http://localhost:8080/api/clearDb/",
-                contentType: "application/json",
-                dataType: "json",
-                data: JSON.stringify({
-                        'data': ""
-                }),
                 cache: false
             })
                 .done(function (result) {
