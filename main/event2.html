@@ -57,6 +57,10 @@
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
                             document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Enter only numbers in the text field! </p>";
                         }
+                        else if (message.localeCompare("NE") == 0) {
+                            document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
+                            document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Teacher cannot be equal to student! </p>";
+                        }
                         else if(message.localeCompare("NV") == 0){
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
                             document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Teacher or student does not exist! </p>";
