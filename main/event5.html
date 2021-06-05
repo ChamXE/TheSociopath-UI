@@ -72,18 +72,11 @@
                     .done(function (result) {
                         document.getElementById("rumour").value = "";
                         document.getElementById("crush").value = "";
-                        document.getElementById("randomizeY").checked = false;
-                        document.getElementById("randomizeN").checked = false;
                         var message = result.payload.status;
 
                         if (message.localeCompare("good") == 0) {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
-                            if(randomize){
-                                document.getElementById("rumour").value = result.payload.rumour;
-                                document.getElementById("crush").value = result.payload.crush;
-                            }
                             document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\">You successfully stopped the rumour!</p>";
-                            
                         }
                         else if (message.localeCompare("bad") == 0) {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Success</p>";
@@ -101,13 +94,20 @@
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
                             document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Crush cannot be equal to rumour! </p>";
                         }
-                        else if(message.localeCompare("NV") == 0){
+                        else if (message.localeCompare("NV") == 0) {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
                             document.getElementById("status").innerHTML += "<p style=\"text-align:center; background-color: white\"> Rumour or crush does not exist! </p>";
                         }
                         else {
                             document.getElementById("status").innerHTML = "<p style=\"text-align:center; background-color: white\"> Status: Failed</p>";
                         }
+
+                        if (randomize) {
+                            document.getElementById("rumour").value = result.payload.rumour;
+                            document.getElementById("crush").value = result.payload.crush;
+                        }
+                        document.getElementById("randomizeY").checked = false;
+                        document.getElementById("randomizeN").checked = false;
 
                         console.log(result);
                     })
@@ -153,8 +153,8 @@
                 </li>
             </ul>
         </div>
-        <img src="../assets/images/CALM_logo_transparent.png" alt="CALM Logo"
-            style="height: 60px; width: auto;" class="rounded float-right">
+        <img src="../assets/images/CALM_logo_transparent.png" alt="CALM Logo" style="height: 60px; width: auto;"
+            class="rounded float-right">
     </nav>
     <p style="text-align: center; margin-top: 2%;">This is event 5. Where you can see if you can stop rumours about you
         and your crush before he/she knows it.</p>
